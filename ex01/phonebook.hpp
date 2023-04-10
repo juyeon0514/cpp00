@@ -5,14 +5,20 @@
 # include <cctype>
 # include <iomanip>
 
-class phonebook {
+# define SUCCESS 0
+# define FAIL 1
+
+# define CORRECT 0
+# define INCORRECT 1
+
+class Phonebook {
 private:
-	database arr[8];
+	Contact arr[8];
 	int	current_idx;
 public:
 	phonebook();
 	~phonebook();
 	int add_information();
-	void search_information();
+	int search_information();
 };
 #endif

@@ -6,7 +6,7 @@
 # include <cctype>
 # include <iomanip>
 
-class database {
+class Contact {
 	private:
 		std::string first_name;
 		std::string	last_name;
@@ -14,8 +14,8 @@ class database {
 		std::string darkest_secret;
 		std::string phone_number;
 	public:
-		database();
-		~database();
+		Contact();
+		~Contact();
 		std::string get_first_name();
 		std::string get_last_name();
 		std::string get_nick_name();

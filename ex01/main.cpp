@@ -13,14 +13,20 @@ int main(void)
 		std::cout << "please insert command";
 		std::cin >> str;
 		if (str == "ADD")
-			add_informatin(book);
+		{
+			if (book.add_informatin())
+				std::cout << "ADD is failed\n" << "this cmd is exhibit";
+		}
 		else if (str == "SEARCH")
-			search_information();
-		else if (str == "EXIT")
-			end = 1;
+		{
+			if (book.search_information())
+				std::cout << "SEARCH is failed\n" << "this cmd is exhibit";
+		}
+		else if (str == "EXIT" || str == EOF)
+			break ;
 		else
 			std::cout << "invalid command, try again";
 	}
 	std::cout << "phonebook finish\n";
-	exit(0);
+	exit(SUCCESS);
 }
