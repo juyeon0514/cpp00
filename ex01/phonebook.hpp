@@ -1,24 +1,20 @@
-#ifndef __PHONEBOOK_H__
-# define __PHONEBOOK_H__
+#ifndef __PHONEBOOK_HPP__
+#define __PHONEBOOK_HPP__
 
-# include <iostream>
-# include <cctype>
-# include <iomanip>
+#include <iostream>
+#include <string>
+#include <cctype>
+#include <iomanip>
+#include "Contact.hpp"
 
-# define SUCCESS 0
-# define FAIL 1
-
-# define CORRECT 0
-# define INCORRECT 1
-
-class Phonebook {
+class Phonebook{
 private:
 	Contact arr[8];
-	int	current_idx;
+	int		idx;
 public:
-	phonebook();
-	~phonebook();
+	Phonebook();
 	int add_information();
 	int search_information();
+	~Phonebook();
 };
 #endif

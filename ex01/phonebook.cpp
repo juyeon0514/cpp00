@@ -1,157 +1,109 @@
-#include "phonebook.hpp"
+#include "Phonebook.hpp"
 
-int	check_correct_component(const std::string str)
+Phonebook::Phonebook()
 {
-	for (int i = 0; i < str.length(); i++)
-	{
-		if (!isalpha(str[i]))
-			return (INCORRECT);
-	}
-	return (CORRECT);
+	this->idx = 0;
 }
 
-int check_is_num(const std::string str)
+int	Phonebook::add_information()
 {
-	for (int i = 0; i < str.length(); i++)
-	{
-		if (!isdigit(str[i]))
-			return (INCORRECT);
-	}
-	return (CORRECT);
-}
-
-int	add_information_check(std::string str)
-{
-	int end;
-
-	end = 0;
-	while (!end)
-	{
-		str::cin >> str;
-		if (str.empty())
-			std::cout << "information is null, try again" << std::endl;
-		else if (check_correct_component(str))
-			std::cout << "information is strange, try again" << std::endl;
-		else
-			end = 1;
-	}
-	return (SUCCESS);
-}
-
-int	add_phone_number_check(std::string str)
-{
-	int end;
-
-	end = 0;
-	while (!end)
-	{
-		str::cin >> str;
-		if (str.empty())
-			std::cout << "information is null, try again" << std::endl;
-		else if (check_is_num(str))
-			std::cout << "information is strange, try again" << std::endl;
-		else
-			end = 1;
-	}
-	return (SUCCESS);
-}
-
-int	phonebook::add_information()
-{
-	database data;
 	std::string str;
 
-	std::cout << "please insert your first name\n";
-	if (add_information_check(str))
-		return (FAIL);
-	data.add_first_name(str);
-
-	std::cout << "please insert yout last name\n";
-	if (add_information_check(str))
-		return (FAIL);
-	data.add_last_name(str);
-
-	std::cout << "please insert your nick name\n";
-	if (add_information_check(str))
-		return (FAIL);
-	data.add_nick_name(str);
-
-	std::cout << "please insert your darkest secret\n";
-	if (add_information_check(str))
-		return (FAIL);
-	data.add_darkest_secret(str);
-
-	std::cout << "phonebook insert your phone number\n";
-	if (add_phone_number_check(str))
-		return (FAIL);
-	data.phone_number(str);
-	this->arr[current_idx % 8];
-	this->current_idx++;
-	return (SUCCESS);
+	std::cout << "Plz, insert your first name\n";
+	std::cin >> str;
+	if (!check_correct_letter(str))
+		return (1);
+	this->arr[idx % 8].get_first_name(str);
+	std::cout << "Plz, insert your last name\n";
+	std::cin >> str;
+	if (!check_correct_letter(str))
+		return (1);
+	this->arr[idx % 8].get_last_name(str);
+	std::cout << "Plz, insert your nick name\n";
+	std::cin >> str;
+	if (str.empty())
+		return (1);
+	this->arr[idx % 8].get_nick_name(str);
+	std::cout << "Plz, insert your phone number\n";
+	std::cin >> str;
+	if (!check_correct_number(str))
+		return (1);
+	this->arr[idx % 8].get_phone_number(str);
+	std::cout << "Plz, insert your darkest secret\n";
+	std::cin >> str;
+	if (str.empty())
+		return (1);
+	this->arr[idx % 8].get_darkest_secret(str);
+	idx++;
+	return (0);
 }
 
-std::string show_name(std::string str)
+std::string Contact::Print_length(std::string str)
 {
 	if (str.length() > 10)
-		return (str.substr(0, 9) + ".");
+		return (str.substr(0,9) + ".");
 	else
 		return (str);
 }
 
-void	print_search_line(Phonebook arr, int i)
+void	Contact::PrintContact(std::string i)
 {
-	std::cout << std::right << set::setw(10) << i;
-	std::cout << std::right << set::setw(10) << show_name(arr.first_name);
-	std::cout << std::right << set::setw(10) << show_name(arr.last_name);
-	std::cout << std::right << set::setw(10) << show_name(arr.nick_name); <<std::endl;
+	std::cout << std::setw(10) << Print_length(i) << "|";
+	std::cout << std::setw(10) << Print_length(this->first_name) << "|";
+	std::cout << std::setw(10) << Print_length(this->last_name) << "|";
+	std::cout << std::setw(10) << Print_length(this->nick_name) << "|" <<std::endl;
 }
 
-void	print_all_information(Phonebook arr)
+void	Contact::Print_all()
 {
-	std::cout << "first_name :" << arr.get_first_name() << std::endl;
-	std::cout << "last name :" << arr.get_last_name() << std::endl;
-	std::cout << "nick name :" << arr.get_nick_name() << std::endl;
-	std::cout << "phone number :" << arr.get_phone_number() << std::endl;
-	std::cout << "darkest secret :" << arr.get_darkest_secret << std::endl;
+	std::cout << "FIRST NAME: "<< this->first_name << std::endl;
+	std::cout << "LAST NAME: "<< this->last_name << std::endl;
+	std::cout << "NICK NAME: " << this->nick_name << std::endl;
+	std::cout << "PHONE NUMBER: " << this->phone_number << std::endl;
+	std::cout << "DARKEST_SECRET: " << this->darkest_secret << std::endl;
 }
 
 int	Phonebook::search_information()
 {
 	int	i;
-	int	number;
+	std::string	num;
 
 	i = 0;
-	if (this->current_index == 0)
-		std::cout << "Phone book is empty." << std::endl;
+	if (this->idx == 0)
+	{
+		std::cout << "Phone book is empty, Plz insert information\n";
+	}
 	else
 	{
-		std::cout << std::right << std::setw(10) << "index" << "|";;
-		std::cout << std::right << std::setw(10) << "first name" << "|";
-		std::cout << std::right << std::setw(10) << "last name" << "|";
-		std::cout << std::right << std::setw(10) << "nick name" << "|" << std::endl;
-		while (i < this->current_idx && i < 8)
+		std::cout << std::setw(10) << "index" << "|";
+		std::cout << std::setw(10) << "first_name" << "|";
+		std::cout << std::setw(10) << "last_name" << "|";
+	 	std::cout << std::setw(10) << "nick_name" << "|" << std::endl;
+		while (i < this->idx && i < 8)
 		{
-			print_search_line(this->arr[i], i);
+			this->arr[i].PrintContact(std::to_string(i));
 			i++;
 		}
-		std::cout << "Please enter the number you search" << std::endl;
-		std::cin >> number;
-		while (TRUE)
+		std::cin >> num;
+		while (1)
 		{
-			if (number <= 7 && number >= 0)
+			if (!check_correct_number(num))
 			{
-				if (this->arr[number].get_first_name().empty())
-					std::cout << "this contact is empty\n";
-				else
-				{
-					print_all_contanct(this->arr[number]);
-					break ;
-				}
+				std::cout << "It is not number" << std::endl;
+				std::cin >> num;
 			}
 			else
-				std::cout << "Out of range, try again" << std::endl;
+				break;
 		}
+		if (std::stoi(num) >= 0 && std::stoi(num) <= 7 && std::stoi(num) < this->idx)
+			arr[stoi(num)].Print_all();
+		else
+			std::cout << "Wrong number range" << std::endl;
 	}
-	return (SUCCESS);
+	return (0);
 }
- 
+
+Phonebook::~Phonebook()
+{
+	std::cout << "destroy" << std::endl;
+}

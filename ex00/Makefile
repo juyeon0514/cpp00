@@ -38,7 +38,7 @@ $(OBJ_DIR)/$(MANDA_DIR)/%.o : $(MANDA_DIR)/%.c
 	$(CC) -c $(CFLAGS) $< -I$(INC_DIR) -o $@
 
 clean :
-	$(RM) $(RMFLAGS)r $(OBJ_DIR)
+	$(RM) $(RMFLAGS)r $(addsuffix .o, $(MANDA_FILES))
 
 fclean : clean
 	$(RM) $(RMFLAGS) $(NAME)

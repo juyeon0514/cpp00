@@ -1,32 +1,34 @@
-#include "phonebook.hpp"
-#include "database.hpp"
+#include "Contact.hpp"
+#include "Phonebook.hpp"
 
-int main(void)
+int	main(void)
 {
-	int	end;
-	phonebook book;
-	std::string str;
+	Phonebook	phonebook;
+	std::string	command;
 
-	end = 0;
-	while (!end)
+	while(1)
 	{
-		std::cout << "please insert command";
-		std::cin >> str;
-		if (str == "ADD")
+		std::cout << "please insert command" << std::endl;
+		std::cin >> command;
+		if (command == "ADD")
 		{
-			if (book.add_informatin())
-				std::cout << "ADD is failed\n" << "this cmd is exhibit";
+			if (phonebook.add_information())
+				std::cout << "Wrong information\n" << std::endl;
 		}
-		else if (str == "SEARCH")
+		else if (command == "SEARCH")
 		{
-			if (book.search_information())
-				std::cout << "SEARCH is failed\n" << "this cmd is exhibit";
+			if (phonebook.search_information())
+				std::cout << "Wrong information\n";
 		}
-		else if (str == "EXIT" || str == EOF)
+		else if (command == "EXIT")
+		{
 			break ;
+		}
 		else
-			std::cout << "invalid command, try again";
+		{
+			std::cout << "this command is not correct try again" << std::endl;
+		}
 	}
-	std::cout << "phonebook finish\n";
-	exit(SUCCESS);
+	std::cout << "Phonebook finish" << std::endl;
+	exit(0);
 }
